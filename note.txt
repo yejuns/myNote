@@ -1,0 +1,65 @@
+stackchange --问答网站
+wget 在下载时会以最后一个/后面的内容为文件命名，使用-o可以自定义文件名
+wget -o wordpress.zip http://www.linuxde.net/download.aspx?id=1080
+wget -c 断点续传
+
+find . -name '*.tmp' -exec rm {} \;
+从当前目录下查找以tmp为后缀的所有文件， -exec 是表bai示查找后紧接着执行的命令 因为rm 不接受管du道输入，
+所以不能写成 find . -name ".ab" | rm 的形似，rm -f 就是删除文件的意思， {} 代表的是find 到的结果传给-exec参数
+而使用-exec 参数必须用分号；结尾 但是在shell中不懂分号;是什么，所有要用转义符加分号，所以就有了\;
+
+locate 与 find 不同: find 是去硬盘找，locate 只在 /var/lib/slocate 资料库中找。
+locate passwd    查找系统中所有的passwd文件
+updatedb         更新locate数据库
+
+LSM树 和 TSM树简介：https://blog.csdn.net/changyanmanman/article/details/88344215
+LSM tree 有效的主要原因是 -- 磁盘的随机读写操作慢，顺序读写操作快
+
+Go 语言中方法和函数在形式上很像，它是作用在接收器（receiver）上的一个函数，接收器是某种类型的变量。因此方法是一种特殊类型的函数，
+方法只是比函数多了一个接收器（receiver），当然在接口中定义的函数我们也称为方法（因为最终还是要通过绑定到类型来实现）。
+正是因为有了接收器，方法才可以作用于接收器的类型（变量）上，类似于面向对象中类的方法可以作用于类属性上。
+
+# docker 
+对 Docker 项目来说，它最核心的原理实际上就是为待创建的用户进程：
+1. 启用 Linux Namespace 配置；
+2. 设置指定的 Cgroups 参数；
+3. 切换进程的根目录（Change Root）。
+
+** docker images **   列出本地主机上的镜像。
+** docker search httpd **   搜索名为httpd的镜像
+** docker pull httpd **     下载名为httpd的镜像
+** docker image rm hello-world ** 删除hello-word镜像
+
+** docker ps -a **       查看所有的容器
+** docker start 123 **   启动id为123的容器
+** docker stop 123 **    关闭id为123的容器
+** docker rm -f 123 **   删除id为123的容器
+** docker run  -it victoriametrics/victoria-metrics **    以命令行模式运行vm
+** docker run  -d  victoriametrics/victoria-metrics **   后台运行
+** docker run -p victoriametrics/victoria-metrics  **          容器内部端口随机映射到主机的端口
+** docker run -p 8428:8428 victoriametrics/victoria-metrics ** 指定容器运行时映射到主机的端口
+** docker run -p 127.0.0.1:8428:8428 victoriametrics/victoria-metrics **  指定容器绑定的网络地址（默认地址是0.0.0.0）
+** docker run -itd --name centos-test centos /bin/bash ** 设置docker的名字为centos-test
+** docker run -dit -p 8189:8189 -p 9090:9090 --name rundb centos /bin/bash ** 绑定多端口
+> 使用docker指定宿主机与容器的端口后，就可以直接在宿主机的浏览器中访问 localhost:XX 就可以访问容器相关的服务
+> 在使用0.0.0.0后，不在路由表中的地址都会进入容器，127.0.0.1 127.0.0.2 访问的结果一样
+> 错误原因 -- rundb根本就没有正常启动
+** docker cp qwerty.txt centos-test:/home/  **          将宿主机文件复制到docker容器
+** docker cp centso-test:/home/qwerty.txt D:\temp  **   将docker容器文件复制到宿主机
+
+docker镜像本质是一个文件，底层依赖于联合文件系统（UnionFS），UnionFS的最大特点是分层和联合加载
+在加载时可以一次同时加载多个文件系统，通过联合加载把各层文件系统叠加，从外部只能看到一个文件系统，最终的文件系统要保护所有底层的文件和目录。
+docker使用的是aufs
+
+git下载后， 要先配置用户名和密码
+git config --global user.name 'yejuns'
+git config --global user.email '18756561540@163.com'
+git config -l           列出所有配置
+git init       初始化本地git项目
+git remote add origin https://github.com/yejuns/myNote.git    将本地git项目与远程仓库的项目进行关联
+git status        查看本地git项目内的变化
+git add *
+git commit -m 'first commit'   本地修改生效
+git push -u origin master   向远端推送 
+
+
