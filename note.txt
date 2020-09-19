@@ -62,4 +62,7 @@ git add *
 git commit -m 'first commit'   本地修改生效
 git push -u origin master   向远端推送 
 
+启动项文件位置
+%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+
 
