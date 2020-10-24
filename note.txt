@@ -4,7 +4,7 @@ wget -o wordpress.zip http://www.linuxde.net/download.aspx?id=1080
 wget -c 断点续传
 
 find . -name '*.tmp' -exec rm {} \;
-从当前目录下查找以tmp为后缀的所有文件， -exec 是表bai示查找后紧接着执行的命令 因为rm 不接受管du道输入，
+从当前目录下查找以tmp为后缀的所有文件， -exec 是表示查找后紧接着执行的命令 因为rm不接受管道输入，
 所以不能写成 find . -name ".ab" | rm 的形似，rm -f 就是删除文件的意思， {} 代表的是find 到的结果传给-exec参数
 而使用-exec 参数必须用分号；结尾 但是在shell中不懂分号;是什么，所有要用转义符加分号，所以就有了\;
 
@@ -62,10 +62,10 @@ git add *
 git commit -m 'first commit'   本地修改生效
 git push -u origin master   向远端推送 
 
-启动项文件位置
+# 启动项文件位置
 %USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
-重装系统
+# 重装系统
 现在从MSDN下载的iso文件不需要经过PE去重装系统，直接解压，执行setup.exe即可。
 而Gho文件中是使用Ghost软件备份的硬盘分区或整个硬盘的所有文件信息，老毛桃、大白菜之类的工具在安装系统时，必须要有这样的文件，不然无法引导安装。
 
