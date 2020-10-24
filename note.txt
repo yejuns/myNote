@@ -65,4 +65,8 @@ git push -u origin master   向远端推送
 启动项文件位置
 %USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
+重装系统
+现在从MSDN下载的iso文件不需要经过PE去重装系统，直接解压，执行setup.exe即可。
+而Gho文件中是使用Ghost软件备份的硬盘分区或整个硬盘的所有文件信息，老毛桃、大白菜之类的工具在安装系统时，必须要有这样的文件，不然无法引导安装。
+
 
