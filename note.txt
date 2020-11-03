@@ -69,4 +69,16 @@ git push -u origin master   向远端推送
 现在从MSDN下载的iso文件不需要经过PE去重装系统，直接解压，执行setup.exe即可。
 而Gho文件中是使用Ghost软件备份的硬盘分区或整个硬盘的所有文件信息，老毛桃、大白菜之类的工具在安装系统时，必须要有这样的文件，不然无法引导安装。
 
-
+dmesg 可以对设备故障进行诊断，因为这个命令保存了设备的开机信息
+${var:-string} 若变量var为空，则用在命令行中用string来替换${var:-string}，否则变量var不为空时，则用变量var的值来替换${var:-string}
+·· linux中的反向单引号，可以获取命令的输出内容，而不是命令执行成功与否的返回值，比如：
+#!/bin/bash
+check_results=`rpm -qa | grep "zlib"`
+echo "command(rpm -qa) results are: $check_results"
+if [[ $check_results =~ "zlib" ]] 
+then 
+    echo "package zlib has already installed. "
+else 
+    echo "This is going to install package zlib"
+fi
+使用rpm -qa命令查询某些rpm包是否安装，没有安装的话进行安装操作。
