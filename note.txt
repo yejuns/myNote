@@ -82,3 +82,10 @@ else 
     echo "This is going to install package zlib"
 fi
 使用rpm -qa命令查询某些rpm包是否安装，没有安装的话进行安装操作。
+
+apt-get remove 会删除软件包而保留软件的配置文件
+apt-get purge 会同时清除软件包和软件的配置文件
+在遇到诸如 ubuntu apt-get install 时报错：Depends: ***(=某版本)but***(另一版本)is to be installed
+这时候就把这个***给purge后再重新装就好， 列如
+apt-get purge libcurl4
+apt-get install curl
