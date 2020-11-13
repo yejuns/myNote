@@ -89,3 +89,75 @@ apt-get purge 会同时清除软件包和软件的配置文件
 这时候就把这个***给purge后再重新装就好， 列如
 apt-get purge libcurl4
 apt-get install curl
+
+用js写异步，如果要并发异步获取两三个地址的数据，并且要在获取到数据之后，对这些数据一起进行利用的话，常规的写法是自己维护一个计数器
+先定义一个 var count = 0，然后每次抓取成功以后，就 count++。如果你是要抓取三个源的数据，由于你根本不知道这些异步操作到底谁先完成，那么每次当抓取成功的时候，就判断一下 count === 3。当值为真时，使用另一个函数继续完成操作。
+1、假设不使用计数器，抓取三个源的写法是
+```
+// 参考 jquery 的 $.get 的方法
+$.get("http://data1_source", function (data1) {
+  // something
+  $.get("http://data2_source", function (data2) {
+    // something
+    $.get("http://data3_source", function (data3) {
+      // something
+      var html = fuck(data1, data2, data3);
+      render(html);
+    });
+  });
+});
+```
+先获取 data1，获取完成之后获取 data2，然后再获取 data3，然后 fuck 它们，进行输出。
+但其实这三个源的数据，是可以并行去获取的，data2 的获取并不依赖 data1 的完成，data3 同理也不依赖 data2。
+2、于是用计数器来写，会是这样
+```
+(function () {
+  var count = 0;
+  var result = {};
+
+  $.get('http://data1_source', function (data) {
+    result.data1 = data;
+    count++;
+    handle();
+    });
+  $.get('http://data2_source', function (data) {
+    result.data2 = data;
+    count++;
+    handle();
+    });
+  $.get('http://data3_source', function (data) {
+    result.data3 = data;
+    count++;
+    handle();
+    });
+
+  function handle() {
+    if (count === 3) {
+      var html = fuck(result.data1, result.data2, result.data3);
+      render(html);
+    }
+  }
+})();
+```
+3、使用eventproxy（就是一个高级的计数器，用于并发操作）
+```
+var ep = new eventproxy();
+ep.all('data1_event', 'data2_event', 'data3_event', function (data1, data2, data3) {
+  var html = fuck(data1, data2, data3);
+  render(html);
+});
+
+$.get('http://data1_source', function (data) {
+  ep.emit('data1_event', data);
+  });
+
+$.get('http://data2_source', function (data) {
+  ep.emit('data2_event', data);
+  });
+
+$.get('http://data3_source', function (data) {
+  ep.emit('data3_event', data);
+  });
+```
+这一句，监听了三个事件，分别是 data1_event, data2_event, data3_event，每次当一个源的数据抓取完成时，就通过 ep.emit() 来告诉 ep 自己，某某事件已经完成了。
+当三个事件未同时完成时，ep.emit() 调用之后不会做任何事；当三个事件都完成的时候，就会调用末尾的那个回调函数，来对它们进行统一处理。
