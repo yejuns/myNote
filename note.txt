@@ -51,9 +51,9 @@ docker镜像本质是一个文件，底层依赖于联合文件系统（UnionFS�
 在加载时可以一次同时加载多个文件系统，通过联合加载把各层文件系统叠加，从外部只能看到一个文件系统，最终的文件系统要保护所有底层的文件和目录。
 docker使用的是aufs
 
-git下载后， 要先配置用户名和密码
+git下载后， 要先配置用户名和密码(配置的原因是，在每次提交的时候就会携带其用户信息，方便)
 git config --global user.name 'yejuns'
-git config --global user.email '18756561540@163.com'
+git config --global user.email '18756561540@163.com' 
 git config -l           列出所有配置
 git init       初始化本地git项目
 git remote add origin https://github.com/yejuns/myNote.git    将本地git项目与远程仓库的项目进行关联
