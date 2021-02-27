@@ -51,15 +51,16 @@ docker镜像本质是一个文件，底层依赖于联合文件系统（UnionFS�
 在加载时可以一次同时加载多个文件系统，通过联合加载把各层文件系统叠加，从外部只能看到一个文件系统，最终的文件系统要保护所有底层的文件和目录。
 docker使用的是aufs
 
-git下载后， 要先配置用户名和密码(配置的原因是，在每次提交的时候就会携带其用户信息，方便)
+可以把git看成是一个特殊的文件系统，git所在目录的文件变化后，还需要把变化的文件add、commit到git中，这样才能保持git里的文件，与git所在目录的文件保持一致
+git下载后， 要先配置用户名和密码(配置的原因是，在每次提交的时候就会携带其用户信息，方便追踪提交的过程)
 git config --global user.name 'yejuns'
-git config --global user.email '18756561540@163.com' 
+git config --global user.email '18756561540@163.com'
 git config -l           列出所有配置
 git init       初始化本地git项目
 git remote add origin https://github.com/yejuns/myNote.git    将本地git项目与远程仓库的项目进行关联
 git status        查看本地git项目内的变化
-git add *
-git commit -m 'first commit'   本地修改生效
+git add *         将所有文件加入暂存区
+git commit -m 'first commit'   本地修改生效（将暂存区中的文件加入到版本历史中）
 git push -u origin master   向远端推送 
 
 # 启动项文件位置
